@@ -29,7 +29,7 @@ defmodule Hangman.GameTest do
   end
 
   describe "make_move/2" do
-    test "does not accept anything apart from a single ascii character as a guess" do
+    test "does not accept anything apart from a single, lowercase, ascii character as a guess" do
       game = Game.new_game()
 
       # a capital ascii character
