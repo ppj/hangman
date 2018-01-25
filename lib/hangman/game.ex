@@ -33,10 +33,16 @@ defmodule Hangman.Game do
   defp reveal_letter(letter, _in_word = true), do: letter
   defp reveal_letter(_letter, _not_in_word), do: "_"
 
+  defmacrop is_lowercase_ascii(char) do
+    quote do
+      unquote(char) in 97..122
+    end
+  end
+
   defp process_move(game, _guess, _already_guessed = true) do
     Map.put(game, :state, :already_used)
   end
-  defp process_move(game, guess = << char >>, _not_already_guessed) when char in 97..122 do
+  defp process_move(game, guess = << char >>, _not_already_guessed) when is_lowercase_ascii(char) do
     Map.put(game, :used, MapSet.put(game.used, guess))
     |> score_guess(Enum.member?(game.letters, guess))
   end
