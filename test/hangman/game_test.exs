@@ -13,11 +13,12 @@ defmodule Hangman.GameTest do
     end
 
     test "provides a word with all lower case letters" do
-      word = Game.new_game()
-             |> Map.get(:letters)
-             |> Enum.join
+      word =
+        Game.new_game()
+        |> Map.get(:letters)
+        |> Enum.join()
 
-      assert word == word |> String.downcase
+      assert word == word |> String.downcase()
     end
 
     test "state doesn't change when the game has been won or lost already" do
@@ -100,8 +101,9 @@ defmodule Hangman.GameTest do
         {"t", :good_guess},
         {"e", :good_guess},
         {"p", :good_guess},
-        {"l", :won},
-      ] |> Enum.reduce(game, fn({guess, state}, tracker_game) ->
+        {"l", :won}
+      ]
+      |> Enum.reduce(game, fn {guess, state}, tracker_game ->
         tracker_game = Game.make_move(tracker_game, guess)
         assert tracker_game.state == state
         assert tracker_game.turns_left == 7
@@ -134,8 +136,9 @@ defmodule Hangman.GameTest do
         {"w", :bad_guess, 3},
         {"x", :bad_guess, 2},
         {"y", :bad_guess, 1},
-        {"z", :lost, 0},
-      ] |> Enum.reduce(game, fn({guess, state, turns_left}, tracker_game) ->
+        {"z", :lost, 0}
+      ]
+      |> Enum.reduce(game, fn {guess, state, turns_left}, tracker_game ->
         tracker_game = Game.make_move(tracker_game, guess)
         assert tracker_game.state == state
         assert tracker_game.turns_left == turns_left
